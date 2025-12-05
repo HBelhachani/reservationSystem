@@ -9,14 +9,13 @@ import java.util.List;
 @Service
 public class OffreService {
 
-    private OffreRepository offreRepo;
+    private final OffreRepository offreRepo;
 
-    public OffreService(OffreRepository offreRepo){
+    public OffreService(OffreRepository offreRepo) {
         this.offreRepo = offreRepo;
     }
 
-    public List<Offre> getAllOffres(){
+    public List<Offre> getAllOffres() {
         return offreRepo.findAll();
     }
-
 }
