@@ -14,16 +14,13 @@ public class OffresAdminControleur {
 
     private final OffreService offreService;
 
-    public OffresAdminControleur(OffreService offreService){
-
+    public OffresAdminControleur(OffreService offreService) {
         this.offreService = offreService;
     }
 
     //CRUD
     @GetMapping("/all")
-    public List<Offre> read(){
-
+    public List<Offre> read() {
         return offreService.getAllOffres();
     }
-
 }
