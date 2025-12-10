@@ -15,12 +15,20 @@ public class Offre {
     private String id;
 
     private double prix;
-    private Date date;
+    private Date dateDepart;
 
     @ManyToOne(optional = false)
     private Vol vol;
 
     @ManyToOne(optional = false)
     private Operateur operateur;
+
+    public Offre(Vol vol, Date dateDepart, double prix){
+        this.vol = vol;
+        this.dateDepart = dateDepart;
+        this.prix = prix;
+    }
+
+    public Offre(){}
 
 }

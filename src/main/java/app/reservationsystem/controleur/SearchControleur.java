@@ -3,6 +3,7 @@ package app.reservationsystem.controleur;
 import app.reservationsystem.entite.Offre;
 import app.reservationsystem.service.OffreService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +30,12 @@ public class SearchControleur {
     public Offre readOffreMaxPrix(){
 
         return offreService.getOffrePrixMax();
+    }
+
+    @GetMapping("/offre/{id}")
+    public Offre readOffreById(@PathVariable String id){
+
+        return offreService.getOffreById(id);
     }
 
     @GetMapping("/offres/prix-croissant")
