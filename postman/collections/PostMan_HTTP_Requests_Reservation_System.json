@@ -1,0 +1,317 @@
+{
+  "info": {
+    "_postman_id": "a139dbaf-2576-4561-9db4-2b5b58e43f68",
+    "name": "Requetes HTTP Systeme Reservation",
+    "description": "Voici une collection de tous les endpoints significatifs pour l'application de reservation.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET Liste<Offre>",
+      "item": [
+        {
+          "name": "offres trié prix croissant",
+          "id": "a2da3f84-0eb3-496d-abb0-959805af9b9f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/search/offres/prix-croissant",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "search",
+                "offres",
+                "prix-croissant"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "offres trié prix decroissant",
+          "id": "308b7e87-9af5-4d41-8eb1-50013197a976",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/search/offres/prix-decroissant",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "search",
+                "offres",
+                "prix-decroissant"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "offres trié par date",
+          "id": "76bcde25-05f7-4555-9f77-3cddb408cb4d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/search/offres/date-croissant",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "search",
+                "offres",
+                "date-croissant"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Toutes les offres",
+          "id": "5f0c5c08-f246-42ba-988d-b76971e5dd3e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/admin/offres/all",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "admin",
+                "offres",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "46efa3f4-9c53-4afc-ba16-f85e05a2937d"
+    },
+    {
+      "name": "GET Offre",
+      "item": [
+        {
+          "name": "Offre plus bas prix",
+          "id": "34a46def-3acf-44bf-8209-eb9dae1f7ffe",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/search/offre/prix-min",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "search",
+                "offre",
+                "prix-min"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Offre plus grand prix",
+          "id": "1c5cb91c-b1cd-4815-b95e-50cd6ccb8e89",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/search/offre/prix-max",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "search",
+                "offre",
+                "prix-max"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "trouver offre par id",
+          "id": "d9c1592a-282e-4968-a107-1ab6f030ce4e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/search/offre/2001",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "search",
+                "offre",
+                "2001"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "98f0b215-6cc3-4d8f-9457-07bb6d82a5a9"
+    },
+    {
+      "name": "Delete offer",
+      "id": "eed3e576-ce80-48f0-94d1-df172a6ba9fc",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/admin/offres/delete/1001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "admin",
+            "offres",
+            "delete",
+            "1001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create Offre",
+      "id": "bfbd1d7e-d1a2-41de-8810-1e7adb7c2fc3",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "id",
+              "value": "1001",
+              "type": "text"
+            },
+            {
+              "key": "trajetId",
+              "value": "101",
+              "type": "text"
+            },
+            {
+              "key": "operateurId",
+              "value": "1",
+              "type": "text"
+            },
+            {
+              "key": "depart",
+              "value": "2026-01-15T12:30:00",
+              "type": "text"
+            },
+            {
+              "key": "prixBase",
+              "value": "850",
+              "type": "text"
+            },
+            {
+              "key": "aeroportDepartId",
+              "value": "1",
+              "type": "text"
+            },
+            {
+              "key": "aeroportDstId",
+              "value": "3",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/admin/offres/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "admin",
+            "offres",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Offre (prix et/ou date)",
+      "id": "8358185a-d955-4eb7-922f-8e5a268da056",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "id",
+              "value": "1006",
+              "type": "text",
+              "uuid": "c4145653-8bf4-4077-bec1-dd206be22330"
+            },
+            {
+              "key": "depart",
+              "value": "2026-01-15T12:30:00",
+              "type": "text",
+              "uuid": "69e24a3b-c844-46c5-bb17-25cb1816663b"
+            },
+            {
+              "key": "prixBase",
+              "value": "5000",
+              "type": "text",
+              "uuid": "9563fa18-1d8d-40e4-9ff5-55ffa66d6ed0",
+              "disabled": true
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/admin/offres/update",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "admin",
+            "offres",
+            "update"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
