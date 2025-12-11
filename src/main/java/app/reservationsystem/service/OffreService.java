@@ -11,6 +11,8 @@ import app.reservationsystem.repository.VolRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -53,6 +55,8 @@ public class OffreService {
 
         List<Offre> offres = offreRepo.findAll();
 
+        if(offres.isEmpty()) return null;
+
         Offre offreMin = offres.getFirst();
 
         for(Offre o : offres){
@@ -69,15 +73,17 @@ public class OffreService {
 
         List<Offre> offres = offreRepo.findAll();
 
-        Offre offreMin = offres.getFirst();
+        if(offres.isEmpty()) return null;
+
+        Offre offreMax = offres.getFirst();
 
         for(Offre o : offres){
-            if(o.getPrix() > offreMin.getPrix()){
-                offreMin = o;
+            if(o.getPrix() > offreMax.getPrix()){
+                offreMax = o;
             }
         }
 
-        return offreMin;
+        return offreMax;
 
     }
 
@@ -102,7 +108,8 @@ public class OffreService {
 
         if(offreDeleted.isPresent()){
             offreRepo.deleteById(id);
-
+        }else {
+            return null;
         }
 
         return offreDeleted.get();
@@ -113,48 +120,87 @@ public class OffreService {
             String id,
             String trajetId,
             String operateurId,
-            Date depart,
+            String departString,
             double prixBase,
             String aeroportDepartId,
             String aeroportDstId) {
 
-        // Basic validations
+        Date departDate;
+        try {
+            departDate = Date.from(LocalDateTime.parse(departString).atZone(ZoneId.systemDefault()).toInstant());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid date format, use yyyy-MM-ddTHH:mm:ss");
+        }
+
         if(id == null || id.isEmpty()
                 || trajetId == null || trajetId.isEmpty()
-                || operateurId == null || operateurId.isEmpty()
-                || depart == null || depart.before(Date.from(Instant.now()))
+                || operateurId == null || operateurId.isEmpty() || departDate.before(Date.from(Instant.now()))
                 || aeroportDepartId == null || aeroportDepartId.isEmpty()
                 || aeroportDstId == null || aeroportDstId.isEmpty()
                 || aeroportDepartId.equals(aeroportDstId)) {
             throw new IllegalArgumentException("Invalid input for creating an Offre");
         }
 
-        // Fetch related entities
-        Aeroport origine = aeroportRepo.findById(aeroportDepartId)
-                .orElseThrow(() -> new IllegalArgumentException("Origin airport not found"));
-        Aeroport destination = aeroportRepo.findById(aeroportDstId)
-                .orElseThrow(() -> new IllegalArgumentException("Destination airport not found"));
-        Operateur operateur = operateurRepo.findById(operateurId)
-                .orElseThrow(() -> new IllegalArgumentException("Operateur not found"));
 
-        // Create Vol
+        Aeroport origine = aeroportRepo.findById(aeroportDepartId)
+                .orElseThrow(() -> new IllegalArgumentException("Aeroport d'origine non trouv"));
+        Aeroport destination = aeroportRepo.findById(aeroportDstId)
+                .orElseThrow(() -> new IllegalArgumentException("Aeroport de destination non trouvé."));
+        Operateur operateur = operateurRepo.findById(operateurId)
+                .orElseThrow(() -> new IllegalArgumentException("Operateur existe déja"));
+
+        if(offreRepo.existsById(id)) throw new IllegalArgumentException("L'offre existe déjà");
+
         Vol vol = new Vol();
         vol.setId(trajetId);
         vol.setOrigine(origine);
         vol.setDestination(destination);
-        // vol.setNumero(...)   // optionally set flight number
-        // vol.setDuree(...)    // optionally calculate/set duration
+
+        //TODO
+        // vol.setNumero()
+        // vol.setDuree()
         volRepo.save(vol);
 
-        // Create Offre
         Offre offre = new Offre();
         offre.setId(id);
-        offre.setDateDepart(depart);
+        offre.setDateDepart(departDate);
         offre.setPrix(prixBase);
         offre.setVol(vol);
         offre.setOperateur(operateur);
 
-        return offreRepo.save(offre);
+        offreRepo.save(offre);
+
+        return offre;
+    }
+
+    public Offre updateOffre(
+            String id,
+            String departString,
+            Double prixBase
+    ) {
+
+        Offre existingOffre = offreRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Offre not found"));
+
+        Date departDate = null;
+        if (departString != null) {
+            try {
+                departDate = Date.from(LocalDateTime.parse(departString)
+                        .atZone(ZoneId.systemDefault()).toInstant());
+            } catch (Exception e) {
+                throw new IllegalArgumentException("Invalid date format, use yyyy-MM-ddTHH:mm:ss");
+            }
+            if (departDate.before(Date.from(Instant.now()))) {
+                throw new IllegalArgumentException("Departure date cannot be in the past");
+            }
+        }
+
+        if (prixBase != null) existingOffre.setPrix(prixBase);
+        if (departDate != null) existingOffre.setDateDepart(departDate);
+
+        offreRepo.save(existingOffre);
+
+        return existingOffre;
     }
 
 

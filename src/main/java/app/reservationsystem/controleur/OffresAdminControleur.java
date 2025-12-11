@@ -4,10 +4,6 @@ import app.reservationsystem.entite.Offre;
 import app.reservationsystem.service.OffreService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -20,7 +16,6 @@ public class OffresAdminControleur {
         this.offreService = offreService;
     }
 
-    //CRUD
     @GetMapping("/all")
     public List<Offre> read() {
         return offreService.getAllOffres();
@@ -40,21 +35,25 @@ public class OffresAdminControleur {
             @RequestParam String id,
             @RequestParam String trajetId,
             @RequestParam String operateurId,
-            @RequestParam String depart,   // <-- change from Date to String
+            @RequestParam String depart,
             @RequestParam double prixBase,
             @RequestParam String aeroportDepartId,
             @RequestParam String aeroportDstId
     ) {
-        // Parse string to Date
-        Date departDate;
-        try {
-            departDate = Date.from(LocalDateTime.parse(depart).atZone(ZoneId.systemDefault()).toInstant());
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid date format, use yyyy-MM-ddTHH:mm:ss");
-        }
 
         return ResponseEntity.ok(
-                offreService.createOffre(id, trajetId, operateurId, departDate, prixBase, aeroportDepartId, aeroportDstId)
+                offreService.createOffre(id, trajetId, operateurId, depart, prixBase, aeroportDepartId, aeroportDstId)
+        );
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Offre> updateOffre(
+            @RequestParam String id,
+            @RequestParam(required = false) String depart,
+            @RequestParam(required = false) Double prixBase
+    ){
+        return ResponseEntity.ok(
+                offreService.updateOffre(id, depart, prixBase)
         );
     }
 
