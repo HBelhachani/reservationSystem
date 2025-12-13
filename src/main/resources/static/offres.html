@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Offres</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>✈️ Offres de vols</h1>
+</header>
+
+<main>
+
+    <div class="filters">
+        <select id="triSelect">
+            <option value="all">Toutes les offres</option>
+            <option value="prix-croissant">Prix croissant</option>
+            <option value="prix-decroissant">Prix décroissant</option>
+            <option value="date-croissant">Date croissante</option>
+            <option value="prix-min">Offre la moins chère</option>
+            <option value="prix-max">Offre la plus chère</option>
+        </select>
+    </div>
+
+    <section id="offres-container"></section>
+
+    <div class="pagination">
+        <button onclick="prevPage()">◀</button>
+        <span id="pageInfo"></span>
+        <button onclick="nextPage()">▶</button>
+    </div>
+
+</main>
+
+<footer>
+    <a href="recherche.html">🔍 Recherche</a>
+    <a href="suppression.html">🗑️ Suppression</a>
+</footer>
+
+<script>
+    let offres = [], page = 1;
+    const pageSize = 6;
+    const container = document.getElementById("offres-container");
+    const pageInfo = document.getElementById("pageInfo");
+
+    function getUrl(v) {
+        return {
+            "prix-croissant": "/api/search/offres/prix-croissant",
+            "prix-decroissant": "/api/search/offres/prix-decroissant",
+            "date-croissant": "/api/search/offres/date-croissant",
+            "prix-min": "/api/search/offre/prix-min",
+            "prix-max": "/api/search/offre/prix-max"
+        }[v] || "/api/admin/offres/all";
+    }
+
+    function afficher() {
+        container.innerHTML = "";
+        offres.slice((page-1)*pageSize, page*pageSize).forEach(o => {
+            container.innerHTML += `
+                <article>
+                    <div class="price">${o.prix} $</div>
+                    <h3>${o.operateur.nom}</h3>
+                    <div class="route">
+                        <span>${o.vol.origine.code}</span>
+                        <span>➜</span>
+                        <span>${o.vol.destination.code}</span>
+                    </div>
+                    <p>${new Date(o.dateDepart).toLocaleString()}</p>
+                </article>`;
+        });
+        pageInfo.textContent = `Page ${page} / ${Math.ceil(offres.length / pageSize)}`;
+    }
+
+    function charger() {
+        fetch(getUrl(document.getElementById("triSelect").value))
+            .then(r => r.json())
+            .then(d => { offres = Array.isArray(d) ? d : [d]; page = 1; afficher(); });
+    }
+
+    function nextPage(){ if(page*pageSize < offres.length){ page++; afficher(); }}
+    function prevPage(){ if(page > 1){ page--; afficher(); }}
+
+    document.getElementById("triSelect").addEventListener("change", charger);
+    charger();
+</script>
+
+</body>
+</html>

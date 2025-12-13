@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recherche d'offre</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>🔍 Recherche d'offre</h1>
+</header>
+
+<main>
+
+    <div class="filters">
+        <input type="number" id="id" placeholder="ID de l'offre">
+        <button onclick="search()">Rechercher</button>
+    </div>
+
+    <!-- IDENTIQUE À offres.html -->
+    <section id="offres-container"></section>
+
+</main>
+
+<footer>
+    <a href="offres.html">⬅ Retour aux offres</a>
+</footer>
+
+<script>
+    function search() {
+        const id = document.getElementById("id").value;
+        const container = document.getElementById("offres-container");
+
+        container.innerHTML = "";
+
+        fetch(`/api/search/offre/${id}`)
+            .then(r => {
+                if (!r.ok) throw new Error();
+                return r.json();
+            })
+            .then(o => {
+                container.innerHTML = `
+                    <article>
+                        <div class="price">${o.prix} $</div>
+                        <h3>${o.operateur.nom}</h3>
+                        <div class="route">
+                            <span>${o.vol.origine.code}</span>
+                            <span>➜</span>
+                            <span>${o.vol.destination.code}</span>
+                        </div>
+                        <p>${new Date(o.dateDepart).toLocaleString()}</p>
+                    </article>
+                `;
+            })
+            .catch(() => {
+                container.innerHTML = `<p class="error">Offre introuvable</p>`;
+            });
+    }
+</script>
+
+</body>
+</html>

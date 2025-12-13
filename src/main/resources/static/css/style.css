@@ -1,0 +1,136 @@
+/* ===== GLOBAL ===== */
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: #f4f6f9;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background: linear-gradient(135deg, #0f4c81, #1976d2);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+main {
+    flex: 1;
+    max-width: 1200px;
+    margin: auto;
+    padding: 25px;
+}
+
+/* ===== FILTERS ===== */
+.filters {
+    margin-bottom: 20px;
+}
+
+select, input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    background: #1976d2;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #125aa0;
+}
+
+/* ===== OFFRES GRID ===== */
+section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+article {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+article:hover {
+    transform: translateY(-5px);
+}
+
+.price {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #2e7d32;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 15px;
+    font-weight: bold;
+}
+
+.route {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+/* ===== PAGINATION ===== */
+.pagination {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.pagination button {
+    margin: 0 5px;
+}
+
+/* ===== CARD (Recherche / Suppression) ===== */
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    max-width: 500px;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background: #0f4c81;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+footer a {
+    color: #bbdefb;
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* ===== UTILS ===== */
+.error {
+    color: red;
+    text-align: center;
+}
