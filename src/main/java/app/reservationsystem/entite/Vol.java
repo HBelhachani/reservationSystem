@@ -4,11 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
 
-import java.util.Date;
-
-@Data
 @Entity
 public class Vol {
 
@@ -25,4 +21,43 @@ public class Vol {
 
     private double duree;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public Aeroport getOrigine() {
+        return origine;
+    }
+
+    public void setOrigine(Aeroport origine) {
+        this.origine = origine;
+    }
+
+    public Aeroport getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Aeroport destination) {
+        this.destination = destination;
+    }
+
+    public double getDuree() {
+        return duree;
+    }
+
+    public void setDuree(double duree) {
+        this.duree = duree;
+    }
 }

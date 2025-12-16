@@ -3,11 +3,9 @@ package app.reservationsystem.entite;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
 
 import java.util.Date;
 
-@Data
 @Entity
 public class Offre {
 
@@ -31,4 +29,43 @@ public class Offre {
 
     public Offre(){}
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
+
+    public Date getDateDepart() {
+        return dateDepart;
+    }
+
+    public void setDateDepart(Date dateDepart) {
+        this.dateDepart = dateDepart;
+    }
+
+    public Vol getVol() {
+        return vol;
+    }
+
+    public void setVol(Vol vol) {
+        this.vol = vol;
+    }
+
+    public Operateur getOperateur() {
+        return operateur;
+    }
+
+    public void setOperateur(Operateur operateur) {
+        this.operateur = operateur;
+    }
 }
